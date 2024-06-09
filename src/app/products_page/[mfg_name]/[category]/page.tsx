@@ -41,9 +41,7 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
                 uniqueCategories[categoryKey] = product.product_category;
             }
         });
-        console.log(uniqueCategories);
         return Object.values(uniqueCategories);
-
     };
 
     return <div className="flex">
