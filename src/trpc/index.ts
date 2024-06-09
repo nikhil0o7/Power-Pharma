@@ -40,7 +40,7 @@ export const appRouter = router({
   products: publicProcedure
     .input(
       z.object({
-        limit: z.number().min(1).max(100),
+        limit: z.number().min(1).max(1000),
       })
     )
     .query(async () => {

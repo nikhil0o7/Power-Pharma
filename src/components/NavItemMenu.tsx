@@ -29,7 +29,7 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
 
     const { data: manufacturers, isLoading: isLoadingManufacturers } = trpc.manufacturers.useQuery({ limit: 100 });
     const { data: categories, isLoading: isLoadingCategories } = trpc.categories.useQuery({ limit: 100 });
-    const { data: products, isLoading: isLoadingProducts } = trpc.products.useQuery({ limit: 100 });
+    const { data: products, isLoading: isLoadingProducts } = trpc.products.useQuery({ limit: 1000 });
     const getCategoriesForManufacturer = (manufacturerName: string): Category[] => {
         const filteredProducts = products?.filter(product => product.manufacturer?.mfg_name === manufacturerName);
 
@@ -41,7 +41,6 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
                 uniqueCategories[categoryKey] = product.product_category;
             }
         });
-    
         return Object.values(uniqueCategories);
     };
 
