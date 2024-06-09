@@ -71,7 +71,7 @@ const start = async () => {
   app.use((req, res) => nextHandler(req, res));
 
   nextApp.prepare().then(() => {
-    payload.logger.info(`Next.js ready on http://localhost:${PORT}`);
+    // payload.logger.info(`Next.js ready on http://localhost:${PORT}`);
     app.listen(PORT, async () => {
       payload.logger.info(
         `Next.js App URL: ${process.env.NEXT_PUBLIC_APP_URL}`
