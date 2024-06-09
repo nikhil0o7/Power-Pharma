@@ -91,7 +91,7 @@ exports.Media = {
         update: isAdminOrHasAccessToImages(),
     },
     upload: {
-        staticURL: "/media",
+        staticURL: "https://powerpharma.up.railway.app/media",
         staticDir: "media",
         imageSizes: [
             {
