@@ -87,7 +87,7 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
                                                 <div key={catIndex}>
                                                     <Link href={`/products_page/${manufacturer.mfg_name}/${category.category}`}>
                                                         <DropdownMenuItem key={catIndex}>
-                                                            <span>{category.category}</span>
+                                                            <span>{catIndex} + {category.category}</span>
                                                         </DropdownMenuItem>
                                                     </Link>
                                                 </div>
