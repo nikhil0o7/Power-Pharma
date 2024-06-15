@@ -12,10 +12,9 @@ import { Category } from "@/payload-types";
 const MobileNav = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const { data: manufacturers, isLoading: isLoadingManufacturers } = trpc.manufacturers.useQuery({ limit: 100 });
-    const { data: products, isLoading: isLoadingProducts } = trpc.products.useQuery({ limit: 100 });
+    const { data: products, isLoading: isLoadingProducts } = trpc.products.useQuery({ limit: 1000 });
 
     const pathname = usePathname()
-
     // whenever we click an item in the menu and navigate away, we want to close the menu
     useEffect(() => {
         setIsOpen(false)

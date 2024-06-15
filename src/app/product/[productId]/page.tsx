@@ -48,8 +48,8 @@ const Page = async ({ params }: PageProps) => {
             typeof image === 'string' ? image : image.url
         )
         .filter(Boolean) as string[];
-    console.log("urls");
-    console.log(validUrls);
+    // console.log("urls");
+    // console.log(validUrls);
 
 
     //@ts-ignore

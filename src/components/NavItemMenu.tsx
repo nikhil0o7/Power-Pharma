@@ -27,26 +27,20 @@ interface NavItemProps {
 
 const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
 
-    const { data: manufacturers, isLoading: isLoadingManufacturers } = trpc.manufacturers.useQuery({ limit: 100 });
-    const { data: categories, isLoading: isLoadingCategories } = trpc.categories.useQuery({ limit: 100 });
+    const { data: manufacturers } = trpc.manufacturers.useQuery({ limit: 100 });
     const { data: products, isLoading: isLoadingProducts } = trpc.products.useQuery({ limit: 1000 });
-    let i =0;
     const getCategoriesForManufacturer = (manufacturerName: string): Category[] => {
-        const filteredProducts = products?.filter((product: Product) => product.manufacturer?.mfg_name === manufacturerName);
+        const filteredProducts = products?.filter((product) => product.manufacturer?.mfg_name === manufacturerName);
 
         const uniqueCategories: { [key: string]: Category } = {};
     
-        filteredProducts?.forEach((product: { product_category: Category; }) => {
+        filteredProducts?.forEach((product) => {
             const categoryKey = product.product_category.category.trim().toLowerCase();
-            console.log(categoryKey);
-            i++;
             if (!uniqueCategories[categoryKey]) {
                 uniqueCategories[categoryKey] = product.product_category;
             }
         });
-        console.log(i);
         return Object.values(uniqueCategories);
-
     };
 
     return <div className="flex">
@@ -74,7 +68,7 @@ const NavItem = ({ isAnyOpen, category, handleOpen, isOpen }: NavItemProps) => {
                                     <span>{manufacturer?.mfg_name as unknown as string}</span>
                                 </DropdownMenuSubTrigger>
                                 <DropdownMenuPortal>
-                                    {isLoadingCategories && isLoadingProducts ? (
+                                    {isLoadingProducts ? (
                                         <DropdownMenuSubContent>
                                             <DropdownMenuItem>
                                                 <span>View All</span>
