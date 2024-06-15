@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
   const { user } = await getServerSideUser(cookies);
 
   if (user && ["/sign-in", "/sign-up"].includes(nextUrl.pathname)) {
-    return NextResponse.redirect(`/`);
+    return NextResponse.redirect(`https://power-pharma.up.railway.app/`);
   }
 
   return NextResponse.next();
