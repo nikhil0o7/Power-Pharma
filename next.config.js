@@ -5,7 +5,7 @@ const nextConfig = {
     // if you'd like to see the remotePatterns version, I'm happy to merge a PR
     domains: [
       "localhost",
-      "power-pharma.up.railway.app",
+      // "power-pharma.up.railway.app",
       "powerpharma.up.railway.app",
     ],
   },
