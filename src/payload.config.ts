@@ -1,17 +1,15 @@
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
+import dotenv from "dotenv";
 import path from "path";
 import { buildConfig } from "payload/config";
-import { Users } from "./collections/Users";
-import dotenv from "dotenv";
-import { Products } from "./collections/Products";
+import { Categories } from "./collections/Categories";
+import { Manufacturers } from "./collections/Manufacturers";
 import { Media } from "./collections/Media";
 import { Orders } from "./collections/Orders";
-import { Manufacturers } from "./collections/Manufacturers";
-import { Categories } from "./collections/Categories";
-import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
-import { cloudStorage } from "@payloadcms/plugin-cloud-storage";
+import { Products } from "./collections/Products";
+import { Users } from "./collections/Users";
 
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
