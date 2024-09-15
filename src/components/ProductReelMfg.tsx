@@ -16,22 +16,34 @@ const FALLBACK_LIMIT = 4;
 
 const ProductReelMfg = (props: ProductReelProps) => {
     const { title, subtitle, href, query } = props;
-    const { data: queryResults, isLoading } = trpc.getInfiniteMfgProducts.useInfiniteQuery({
-        limit: query.limit ?? FALLBACK_LIMIT,
-        query,
-    }, {
-        getNextPageParam: (lastPage) => lastPage.nextPage,
-    })
-    const updatedProducts = queryResults?.pages.flatMap(page => page.items)
-        .map(item => ({
-            ...item,
-            // @ts-ignore
-            manufacturer: item.manufacturer.mfg_name,
-            // @ts-ignore
-            product_category: item.product_category.category
-        }));
+    // const { data: queryResults, isLoading } = trpc.getInfiniteProducts.useInfiniteQuery({
+    //     limit: query.limit ?? FALLBACK_LIMIT,
+    //     query,
+    // }, {
+    //     getNextPageParam: (lastPage) => lastPage.nextPage,
+    // });
+
     const queryManufacturer = query.manufacturer;
     const queryProductCategory = query.product_category;
+    const { data: queryResults, isLoading } = trpc.getInfiniteMfgProducts.useInfiniteQuery({
+        limit: query.limit ?? FALLBACK_LIMIT,
+        manufacturer: query.manufacturer,
+        product_category: query.product_category,
+        query, // Include other query parameters
+    }, {
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
+    console.log(queryResults);
+
+    const updatedProducts = queryResults?.pages.flatMap(page => page.items)
+    .map(item => ({
+        ...item,
+        // @ts-ignore
+        manufacturer: item.manufacturer.mfg_name,
+        // @ts-ignore
+        product_category: item.product_category.category
+    }));
+
     let map_products: (Product | null)[] = []
     if (updatedProducts && updatedProducts.length) {
         //@ts-ignore
@@ -41,6 +53,7 @@ const ProductReelMfg = (props: ProductReelProps) => {
             query.limit ?? FALLBACK_LIMIT
         ).fill(null)
     }
+    // console.log(map_products);
 
 
     return (
@@ -63,13 +76,11 @@ const ProductReelMfg = (props: ProductReelProps) => {
                     <div className='w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8'>
                         {
                             map_products.map((product, i) =>
-                                product?.manufacturer === queryProductCategory && product?.product_category === queryManufacturer ? (
                                     <ProductListing
                                         key={`product-${i}`}
                                         product={product}
                                         index={i}
                                     />
-                                ) : null
                             )
                         }
                     </div>

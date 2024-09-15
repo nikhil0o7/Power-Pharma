@@ -38,8 +38,9 @@ export const Media: CollectionConfig = {
     update: isAdminOrHasAccessToImages(),
   },
   upload: {
-    staticURL: "https://powerpharma.up.railway.app/media",
+    staticURL: "https://storage.googleapis.com/powerpharma",
     staticDir: "media",
+    disableLocalStorage: true,
     imageSizes: [
       {
         name: "thumbnail",

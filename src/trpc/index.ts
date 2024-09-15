@@ -91,37 +91,89 @@ export const appRouter = router({
       });
       return { items, nextPage: hasNextPage ? nextPage : null };
     }),
-  getInfiniteMfgProducts: publicProcedure
-    .input(
-      z.object({
-        limit: z.number().min(1).max(1000),
-        cursor: z.number().nullish(),
-        manufacturer: z.any().nullish(),
-        product_category: z.any().nullish(),
-        query: MfgQueryValidator,
-      })
-    )
-    .query(async ({ input }) => {
-      const { query, cursor } = input;
-      const { sort, limit, product_category, manufacturer } = query;
-      const payload = await getPayloadClient();
-      const parsedQueryOpts: Record<string, { equals: string }> = {};
+    getInfiniteMfgProducts: publicProcedure
+      .input(
+        z.object({
+          limit: z.number().min(1).max(1000),
+          cursor: z.number().nullish(),
+          manufacturer: z.any().nullish(),
+          product_category: z.any().nullish(),
+          query: MfgQueryValidator,
+        })
+      )
+      .query(async ({ input }) => {
+        const { query, cursor } = input;
+        const { sort, limit, manufacturer, product_category, ...queryOpts } = query;
+        const payload = await getPayloadClient();
+        
+        const parsedQueryOpts: Record<string, { equals: string }> = {
+          ...(manufacturer ? { 'manufacturer.mfg_name': { equals: manufacturer } } : {}),
+          ...(product_category ? { 'product_category.category': { equals: product_category } } : {}),
+          // Add dynamic query options
+          ...Object.entries(queryOpts).reduce((acc, [key, value]) => {
+            //@ts-ignore
+            acc[key] = { equals: value };
+            return acc;
+          }, {})
+        };
 
-      const page = cursor || 1;
+        const page = cursor || 1;
 
-      const {
-        docs: items,
-        hasNextPage,
-        nextPage,
-      } = await payload.find({
-        collection: "products",
-        sort,
-        depth: 1,
-        limit,
-        page,
-      });
-      return { items, nextPage: hasNextPage ? nextPage : null };
-    }),
+        const {
+          docs: items,
+          hasNextPage,
+          nextPage,
+        } = await payload.find({
+          collection: "products",
+          where: {
+            approvedForSale: {
+              equals: "approved",
+            },
+            ...parsedQueryOpts,
+          },
+          sort,
+          depth: 1,
+          limit,
+          page,
+        });
+
+        return { items, nextPage: hasNextPage ? nextPage : null };
+      }),
+  // getInfiniteMfgProducts: publicProcedure
+  //   .input(
+  //     z.object({
+  //       limit: z.number().min(1).max(1000),
+  //       cursor: z.number().nullish(),
+  //       manufacturer: z.any().nullish(),
+  //       product_category: z.any().nullish(),
+  //       query: MfgQueryValidator,
+  //     })
+  //   )
+  //   .query(async ({ input }) => {
+  //     const { query, cursor } = input;
+  //     const { sort, limit, product_category, manufacturer } = query;
+  //     const payload = await getPayloadClient();
+  //     const parsedQueryOpts: Record<string, { equals: string }> = {};
+
+  //     const page = cursor || 1;
+  //     const filters = {
+  //       ...(manufacturer ? { manufacturer: { equals: manufacturer } } : {}),
+  //       ...(product_category ? { product_category: { equals: product_category } } : {}),
+  //     };
+  //     const {
+  //       docs: items,
+  //       hasNextPage,
+  //       nextPage,
+  //     } = await payload.find({
+  //       collection: "products",
+  //       sort,
+  //       depth: 1,
+  //       limit,
+  //       page,
+  //       where: filters
+  //     });
+  //     return { items, nextPage: hasNextPage ? nextPage : null };
+  //   }),
 });
 
 export type AppRouter = typeof appRouter;

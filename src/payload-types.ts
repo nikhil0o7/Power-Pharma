@@ -41,13 +41,13 @@ export interface Product {
   name: string;
   description?: string | null;
   detailed_description?: string | null;
-  manufacturer:  Manufacturer;
-  product_category:  Category;
+  manufacturer: Manufacturer;
+  product_category: Category;
   price: number;
   approvedForSale?: ('pending' | 'approved' | 'denied') | null;
   priceId?: string | null;
   images: {
-    image: string | Media;
+    image: Media;
     id?: string | null;
   }[];
   updatedAt: string;

@@ -17,8 +17,8 @@ interface PageProps {
 
 
 const ManufacturerProductsPage = async ({ params }: PageProps) => {
-    const product_category = decodeURIComponent(params.mfg_name);
-    const manufacturer = decodeURIComponent(params.category);
+    const product_category = decodeURIComponent(params.category);
+    const manufacturer = decodeURIComponent(params.mfg_name);
 
     const sort = 'desc';
 
@@ -28,9 +28,9 @@ const ManufacturerProductsPage = async ({ params }: PageProps) => {
                 title={`Browse ${manufacturer} Products`}
                 subtitle={`Category: ${product_category}`}
                 query={{
-                    product_category,
                     manufacturer,
-                    limit: 40,
+                    product_category,
+                    limit: 1000,
                     sort:
                         sort === 'desc' || sort === 'asc'
                             ? sort
