@@ -15,12 +15,12 @@ export const Orders: CollectionConfig = {
     useAsTitle: "Your Orders",
     description: "A summary of all your orders",
   },
-  access: {
-    read: yourOwn,
-    update: ({ req }) => req.user.role === "admin",
-    create: ({ req }) => req.user.role === "admin",
-    delete: ({ req }) => req.user.role === "admin",
-  },
+  // access: {
+  //   read: yourOwn,
+  //   update: ({ req }) => req.user.role === "admin",
+  //   create: ({ req }) => req.user.role === "admin",
+  //   delete: ({ req }) => req.user.role === "admin",
+  // },
   fields: [
     {
       name: "_isPaid",

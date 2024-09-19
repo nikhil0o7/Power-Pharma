@@ -1,18 +1,18 @@
 import { User } from "payload/dist/auth";
 import { Access, CollectionConfig } from "payload/types";
 
-const isAdminOrHasAccessToImages =
-  (): Access =>
-  async ({ req }) => {
-    const user = req.user as User | undefined;
-    if (!user) return false;
-    if (user.role === "admin") return true;
-    return {
-      user: {
-        equals: req.user.id,
-      },
-    };
-  };
+// const isAdminOrHasAccessToImages =
+//   (): Access =>
+//   async ({ req }) => {
+//     const user = req.user as User | undefined;
+//     if (!user) return false;
+//     if (user.role === "admin") return true;
+//     return {
+//       user: {
+//         equals: req.user.id,
+//       },
+//     };
+//   };
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -26,17 +26,17 @@ export const Media: CollectionConfig = {
   //   admin: {
   //     hidden: ({ user }) => user?.role !== "admin",
   //   },
-  access: {
-    read: async ({ req }) => {
-      const referer = req.headers.referer;
-      if (!req.user || !referer?.includes("sell")) {
-        return true;
-      }
-      return await isAdminOrHasAccessToImages()({ req });
-    },
-    delete: isAdminOrHasAccessToImages(),
-    update: isAdminOrHasAccessToImages(),
-  },
+  // access: {
+  //   read: async ({ req }) => {
+  //     const referer = req.headers.referer;
+  //     if (!req.user || !referer?.includes("sell")) {
+  //       return true;
+  //     }
+  //     return await isAdminOrHasAccessToImages()({ req });
+  //   },
+  //   delete: isAdminOrHasAccessToImages(),
+  //   update: isAdminOrHasAccessToImages(),
+  // },
   upload: {
     staticURL: "https://storage.googleapis.com/powerpharma",
     staticDir: "media",

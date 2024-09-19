@@ -17,11 +17,11 @@ export const Manufacturers: CollectionConfig = {
   admin: {
     useAsTitle: "mfg_name",
   },
-  access: {
-    read: isAdminOrHasAccess(),
-    update: isAdminOrHasAccess(),
-    delete: isAdminOrHasAccess(),
-  },
+  // access: {
+  //   read: isAdminOrHasAccess(),
+  //   update: isAdminOrHasAccess(),
+  //   delete: isAdminOrHasAccess(),
+  // },
 
   fields: [
     // {

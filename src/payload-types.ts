@@ -115,7 +115,7 @@ export interface Media {
 export interface Order {
   id: string;
   _isPaid: boolean;
-  user: string | User;
+  user: User;
   products: (string | Product)[];
   updatedAt: string;
   createdAt: string;
